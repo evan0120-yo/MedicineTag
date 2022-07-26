@@ -3,9 +3,17 @@ dotnet add package Pomelo.EntityFrameworkCore.MySql --version 6.0.1
 dotnet add package Microsoft.EntityFrameworkCore.Design
 
 <!-- ================================ -->
-dotnet ef migrations add changeModel01 -- context MedicineContext
+<!-- 更新Migrations -->
+dotnet ef migrations add init -- context MedicineContext
+<!-- 更新DataBase -->
 dotnet ef database update --context MedicineContext
+
+AutoMapper.Extensions.Microsoft.DependencyInjection
+
 
 <!-- 相關網站 -->
 <!-- track -->
 https://docs.microsoft.com/zh-tw/ef/core/change-tracking/
+
+https://docs.microsoft.com/zh-tw/dotnet/api/system.componentmodel.dataannotations?view=net-6.0
+

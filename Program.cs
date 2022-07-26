@@ -1,4 +1,7 @@
+using MedicineTag.Definition;
 using MedicineTag.Models;
+using MedicineTag.Service;
+using MedicineTag.Service.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// autoMapper
+builder.Services.AddAutoMapper(typeof(MedicineTagProfile).Assembly);
 
+// DI
 // builder.Services.AddTransient<MedicineContext>();   // 每次請求都拿到新的物件
 builder.Services.AddScoped<MedicineContext>();      // 每次請求都拿到同個物件
+builder.Services.AddScoped(typeof(IMedicineInfoService), typeof(MedicineInfoService));
 
 
 var app = builder.Build();

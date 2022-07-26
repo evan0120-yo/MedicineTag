@@ -23,4 +23,6 @@ public partial class MedicineContext : DbContext
     }
 
     public virtual DbSet<MedicineInfo> medicineInfos{get;set;}
+
+    public virtual DbSet<MedicineClass> medicineClass { get; set; }
 }

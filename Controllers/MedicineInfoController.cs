@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MedicineTag.Models;
-using MedicineTag.Definition;
-using Microsoft.EntityFrameworkCore;
+using MedicineTag.Service.Impl;
+using MedicineTag.DTOs;
+using AutoMapper;
 
 namespace MedicineTag.Controllers;
 
@@ -10,67 +11,72 @@ namespace MedicineTag.Controllers;
 public class MedicineInfoController : ControllerBase
 {
 
-
     private readonly MedicineContext _medicineContext;
 
-    public MedicineInfoController(MedicineContext medicineContext)
+    private readonly IMedicineInfoService _medicineInfoService;
+
+    private readonly IMapper _IMapper;
+
+    public MedicineInfoController(MedicineContext medicineContext, 
+        IMedicineInfoService medicineInfoService, IMapper IMapper)
     {
         _medicineContext = medicineContext;
+        _medicineInfoService = medicineInfoService;
+        _IMapper = IMapper;
     }
 
-        
+
     [HttpPost()]
-    public ActionResult<MedicineInfo> Add([FromBody]MedicineInfo medicineInfo)
+    public ActionResult<MedicineInfo> Add([FromBody] MedicineInfoDTO medicineInfoDTO)
     {
-        _medicineContext.Add(medicineInfo);
-        // 此時 EntityState = Add = add
-        _medicineContext.SaveChanges();
-        return CreatedAtAction(nameof(Get), new{ id = medicineInfo.id}, medicineInfo);
+        MedicineInfo medicineInfo = _IMapper.Map<MedicineInfo>(medicineInfoDTO);
+        _medicineInfoService.Add(medicineInfo);
+        return CreatedAtAction(nameof(GetById), new { id = medicineInfo.Id }, medicineInfo);
     }
 
-    [HttpDelete("/medicineInfo/{id}")]
-    public ActionResult<String> Delete(Guid id)
+    [HttpDelete("/{id}")]
+    public void Delete(Guid id)
     {
-        var medicineInfo = _medicineContext.medicineInfos.Find(id);
-        if(medicineInfo == null)
-        {
-            return NotFound();
-        }
-        _medicineContext.medicineInfos.Remove(medicineInfo);
-        // 此時 EntityState = Deleted = delete
-        _medicineContext.SaveChanges();
-        return "刪除成功";
+        _medicineInfoService.Delete(id);
     }
 
-    [HttpPut("/medicineInfo")]
-    public ActionResult<String> UpdatePut([FromBody]MedicineInfo medicineInfo)
+    [HttpPut()]
+    public ActionResult<MedicineInfo> Update([FromBody] MedicineInfoDTO medicineInfoDTO)
     {
-        var resault = _medicineContext.medicineInfos.Find(medicineInfo.id);
-        // 此時 EntityState = Modified = update
-        if(resault == null)
-        {
-            return NotFound();
-        }
-        resault.name = medicineInfo.name;
-        _medicineContext.SaveChanges();
-        return "更新成功";
+        MedicineInfo medicineInfo = _IMapper.Map<MedicineInfo>(medicineInfoDTO);
+        _medicineInfoService.Update(medicineInfo);
+        return CreatedAtAction(nameof(GetById), new { id = medicineInfo.Id }, medicineInfo);
     }
 
-    [HttpGet("/medicineInfo")]
-    public ActionResult<IEnumerable<MedicineInfo>> Get()
+    [HttpGet()]
+    public ActionResult<IEnumerable<MedicineInfo>> GetAll()
     {
-        var medicineInfoList = _medicineContext.medicineInfos;
+        // 1
+        //var medicineinfolist = _medicineContext.medicineInfos;
+        // 2
+        var medicineInfoList = (from a in _medicineContext.medicineInfos
+                                select a).ToList();
+        // 3
+        //var medicineInfoList = _medicineContext.medicineInfos
+        //    .FromSqlRaw("select * from medicineinfos")
+        //    .ToList(); 
+
         return medicineInfoList;
     }
 
-    [HttpGet("/medicineInfo/{id}")]
+    [HttpGet("/{id}")]
     public ActionResult<MedicineInfo> GetById(Guid id)
     {
+        // === 1 ===
         // var medicineInfo = _medicineContext.medicineInfos.Find(id);
-        var medicineInfo = (from a in _medicineContext.medicineInfos 
-                            where a.id == id 
+        // === 2 ===
+        var medicineInfo = (from a in _medicineContext.medicineInfos
+                            where a.Id == id
                             select a).SingleOrDefault();
-        if(medicineInfo == null)
+        // === 3 ===
+        //var medicineInfo = _medicineContext.medicineInfos
+        //    .FromSqlRaw($"select * from medicineinfos where id = '{id}'").SingleOrDefault();
+        if (medicineInfo == null)
         {
             return NotFound();
             // return BadRequest();
