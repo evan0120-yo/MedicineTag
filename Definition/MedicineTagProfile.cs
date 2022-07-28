@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using MedicineTag.DTOs;
-using MedicineTag.Models;
+using MedicineTag.AppMedicineInfo;
 
 namespace MedicineTag.Definition;
 

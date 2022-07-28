@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MedicineTag.Models;
+namespace MedicineTag.AppMedicineInfoClass;
 
-public class MedicineClass
+public class MedicineInfoClass
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
 
-    public string? Name { get; set; }   // BP
+    public Guid MedicineInfoId { get; set; }
 
+    public Guid MedicineClassId { get; set; }
 }
-

@@ -1,7 +1,7 @@
 using MedicineTag.Definition;
 using MedicineTag.Models;
-using MedicineTag.Service;
-using MedicineTag.Service.Impl;
+using MedicineTag.AppMedicineInfo;
+using MedicineTag.AppMedicineInfo.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,3 +1,5 @@
+using MedicineTag.AppMedicineClass;
+using MedicineTag.AppMedicineInfo;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicineTag.Models;

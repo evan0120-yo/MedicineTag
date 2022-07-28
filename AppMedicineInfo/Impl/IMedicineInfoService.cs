@@ -1,6 +1,6 @@
-﻿using MedicineTag.Models;
+﻿using MedicineTag.AppMedicineInfo;
 
-namespace MedicineTag.Service.Impl;
+namespace MedicineTag.AppMedicineInfo.Impl;
 
 
 public interface IMedicineInfoService

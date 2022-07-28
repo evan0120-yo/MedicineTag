@@ -1,9 +1,9 @@
 ﻿using MedicineTag.Models;
 using MedicineTag.AppException;
-using MedicineTag.Service.Impl;
+using MedicineTag.AppMedicineInfo.Impl;
+using MedicineTag.AppMedicineInfo;
 
-
-namespace MedicineTag.Service;
+namespace MedicineTag.AppMedicineInfo;
 
 public class MedicineInfoService : IMedicineInfoService
 {

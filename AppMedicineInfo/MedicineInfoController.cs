@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MedicineTag.Models;
-using MedicineTag.Service.Impl;
-using MedicineTag.DTOs;
+using MedicineTag.AppMedicineInfo.Impl;
 using AutoMapper;
 
-namespace MedicineTag.Controllers;
+namespace MedicineTag.AppMedicineInfo;
 
 [ApiController]
 [Route("[controller]")]
@@ -17,7 +16,7 @@ public class MedicineInfoController : ControllerBase
 
     private readonly IMapper _IMapper;
 
-    public MedicineInfoController(MedicineContext medicineContext, 
+    public MedicineInfoController(MedicineContext medicineContext,
         IMedicineInfoService medicineInfoService, IMapper IMapper)
     {
         _medicineContext = medicineContext;

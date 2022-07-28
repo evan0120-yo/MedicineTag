@@ -3,6 +3,7 @@ using System;
 using MedicineTag.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicineTag.Migrations
 {
     [DbContext(typeof(MedicineContext))]
-    partial class MedicineContextModelSnapshot : ModelSnapshot
+    [Migration("20220728085140_addInfoClass")]
+    partial class addInfoClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
