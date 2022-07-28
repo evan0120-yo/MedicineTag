@@ -17,3 +17,7 @@ https://docs.microsoft.com/zh-tw/ef/core/change-tracking/
 
 https://docs.microsoft.com/zh-tw/dotnet/api/system.componentmodel.dataannotations?view=net-6.0
 
+<!-- 刪除分支 -->
+git branch -D issue1
+<!-- 創建分支 -->
+git checkout -b <new branch name>
