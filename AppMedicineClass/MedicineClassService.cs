@@ -1,26 +1,24 @@
-﻿using MedicineTag.Models;
-using MedicineTag.AppException;
+﻿using MedicineTag.AppException;
+using MedicineTag.Models;
 
-namespace MedicineTag.AppMedicineInfo;
+namespace MedicineTag.AppMedicineClass;
 
-public class MedicineInfoService : IMedicineInfoService
+public class MedicineClassService : IMedicineClassService
 {
     private readonly MedicineContext _medicineContext;
-    private readonly ILogger<IMedicineInfoService> _logger;
+    private readonly ILogger<IMedicineClassService> _logger; 
 
-    public MedicineInfoService(MedicineContext medicineContext, ILogger<IMedicineInfoService> logger)
+    public MedicineClassService(MedicineContext medicineContext, ILogger<IMedicineClassService> logger)
     {
-        _medicineContext = medicineContext; 
+        _medicineContext = medicineContext;
         _logger = logger;
     }
 
-    public void Add(MedicineInfo medicineInfo)
+    public void Add(MedicineClass medicineClass)
     {
-        medicineInfo.CreateTime = DateTime.Now;
-        medicineInfo.UpdateTime = DateTime.Now;
         try
         {
-            _medicineContext.Add(medicineInfo);
+            _medicineContext.Add(medicineClass);
             // 此時 EntityState = Add = add
             _medicineContext.SaveChanges();
         }
@@ -36,17 +34,17 @@ public class MedicineInfoService : IMedicineInfoService
         // 1
         //var medicineInfo = _medicineContext.medicineInfos.Find(id);
         // 2
-        var medicineInfo = (from a in _medicineContext.medicineInfos
-                            where a.MedicineInfoId == id
+        var medicineClass = (from a in _medicineContext.medicineClass
+                            where a.MedicineClassId == id
                             select a).SingleOrDefault();
 
-        if (medicineInfo == null)
+        if (medicineClass == null)
         {
             throw new DataNotFoundException("該id查無此資料");
         }
         try
         {
-            _medicineContext.medicineInfos.Remove(medicineInfo);
+            _medicineContext.medicineClass.Remove(medicineClass);
             // 此時 EntityState = Deleted = delete
             _medicineContext.SaveChanges();
         }
@@ -57,13 +55,10 @@ public class MedicineInfoService : IMedicineInfoService
         }
     }
 
-    public void Update(MedicineInfo medicineInfo)
+    public void Update(MedicineClass medicineClass)
     {
-        // 1
-        //var resault = _medicineContext.medicineInfos.Find(medicineInfo.id);
-        // 2
-        var resault = (from a in _medicineContext.medicineInfos
-                       where a.MedicineInfoId == medicineInfo.MedicineInfoId
+        var resault = (from a in _medicineContext.medicineClass
+                       where a.MedicineClassId == medicineClass.MedicineClassId
                        select a).SingleOrDefault();
         // 此時 EntityState = Modified = update
         if (resault == null)
@@ -73,9 +68,7 @@ public class MedicineInfoService : IMedicineInfoService
 
         try
         {
-            resault.UpdateTime = DateTime.Now;
-
-            resault.MedicineInfoName = medicineInfo.MedicineInfoName;
+            resault.MedicineClassName = medicineClass.MedicineClassName;
             _medicineContext.SaveChanges();
         }
         catch (Exception e)
@@ -85,37 +78,35 @@ public class MedicineInfoService : IMedicineInfoService
         }
     }
 
-    public MedicineInfo GetOne(Guid id)
+    public MedicineClass GetOne(Guid id)
     {
         // === 1 ===
         // var medicineInfo = _medicineContext.medicineInfos.Find(id);
         // === 2 ===
-        var medicineInfo = (from a in _medicineContext.medicineInfos
-                            where a.MedicineInfoId == id
+        var medicineClass = (from a in _medicineContext.medicineClass
+                            where a.MedicineClassId == id
                             select a).SingleOrDefault();
         // === 3 ===
         //var medicineInfo = _medicineContext.medicineInfos
         //    .FromSqlRaw($"select * from medicineinfos where id = '{id}'").SingleOrDefault();
-        if (medicineInfo == null)
+        if (medicineClass == null)
         {
             throw new DataNotFoundException("查無此id");
         }
-        return medicineInfo;
+        return medicineClass;
     }
-    public IEnumerable<MedicineInfo> GetAll()
+    public IEnumerable<MedicineClass> GetAll()
     {
         // 1
         //var medicineinfolist = _medicineContext.medicineInfos;
         // 2
-        var medicineInfoList = (from a in _medicineContext.medicineInfos
+        var medicineClassList = (from a in _medicineContext.medicineClass
                                 select a).ToList();
         // 3
         //var medicineInfoList = _medicineContext.medicineInfos
         //    .FromSqlRaw("select * from medicineinfos")
         //    .ToList(); 
 
-        return medicineInfoList;
+        return medicineClassList;
     }
-
 }
-

@@ -6,9 +6,11 @@ namespace MedicineTag.AppMedicineClass;
 public class MedicineClass
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public Guid MedicineClassId { get; set; }
 
-    public string? Name { get; set; }   // BP
+    public string? MedicineClassName { get; set; }   // BP
+
+    public string? MedicineClassTpye { get; set; }   // BP的類型
 
 }
 

@@ -21,37 +21,57 @@ namespace MedicineTag.Migrations
 
             modelBuilder.Entity("MedicineTag.AppMedicineClass.MedicineClass", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("MedicineClassId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("MedicineClassName")
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.Property<string>("MedicineClassTpye")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("MedicineClassId");
 
                     b.ToTable("medicineClass");
                 });
 
             modelBuilder.Entity("MedicineTag.AppMedicineInfo.MedicineInfo", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("MedicineInfoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("MedicineInfoName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime(6)");
 
-                    b.HasKey("Id");
+                    b.HasKey("MedicineInfoId");
 
                     b.ToTable("medicineInfos");
+                });
+
+            modelBuilder.Entity("MedicineTag.AppMedicineInfoClass.MedicineInfoClass", b =>
+                {
+                    b.Property<Guid>("MedicineInfoClassId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MedicineClassId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MedicineInfoId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("MedicineInfoClassId");
+
+                    b.ToTable("medicineInfoClass");
                 });
 #pragma warning restore 612, 618
         }

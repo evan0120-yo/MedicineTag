@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using MedicineTag.Models;
-using MedicineTag.AppMedicineInfo.Impl;
 using AutoMapper;
 
 namespace MedicineTag.AppMedicineInfo;
@@ -16,70 +15,61 @@ public class MedicineInfoController : ControllerBase
 
     private readonly IMapper _IMapper;
 
+    private readonly ILogger<IMedicineInfoService> _logger;
+
     public MedicineInfoController(MedicineContext medicineContext,
-        IMedicineInfoService medicineInfoService, IMapper IMapper)
+        IMedicineInfoService medicineInfoService, IMapper IMapper, ILogger<IMedicineInfoService> logger)
     {
         _medicineContext = medicineContext;
         _medicineInfoService = medicineInfoService;
         _IMapper = IMapper;
+        _logger = logger;
     }
 
 
-    [HttpPost()]
+    [HttpPost("/medicineInfo")]
     public ActionResult<MedicineInfo> Add([FromBody] MedicineInfoDTO medicineInfoDTO)
     {
         MedicineInfo medicineInfo = _IMapper.Map<MedicineInfo>(medicineInfoDTO);
         _medicineInfoService.Add(medicineInfo);
-        return CreatedAtAction(nameof(GetById), new { id = medicineInfo.Id }, medicineInfo);
+        return CreatedAtAction(nameof(GetById), new { id = medicineInfo.MedicineInfoId }, medicineInfo);
     }
 
-    [HttpDelete("/{id}")]
+    [HttpPost("/medicineInfo/medInfo")]
+    public ActionResult<String> AddMedicineInfo([FromBody] MedicineInfoDTO medicineInfoDTO)
+    {
+        if (medicineInfoDTO.MedicineInfoName == null)
+        {
+            return BadRequest("藥品姓名不可為空");
+        }
+        return "111";
+    }
+
+    [HttpDelete("/medicineInfo/{id}")]
     public void Delete(Guid id)
     {
         _medicineInfoService.Delete(id);
     }
 
-    [HttpPut()]
+    [HttpPut("/medicineInfo")]
     public ActionResult<MedicineInfo> Update([FromBody] MedicineInfoDTO medicineInfoDTO)
     {
         MedicineInfo medicineInfo = _IMapper.Map<MedicineInfo>(medicineInfoDTO);
         _medicineInfoService.Update(medicineInfo);
-        return CreatedAtAction(nameof(GetById), new { id = medicineInfo.Id }, medicineInfo);
+        return CreatedAtAction(nameof(GetById), new { id = medicineInfo.MedicineInfoId }, medicineInfo);
     }
 
-    [HttpGet()]
-    public ActionResult<IEnumerable<MedicineInfo>> GetAll()
+    [HttpGet("/medicineInfo")]
+    public IEnumerable<MedicineInfo> GetAll()
     {
-        // 1
-        //var medicineinfolist = _medicineContext.medicineInfos;
-        // 2
-        var medicineInfoList = (from a in _medicineContext.medicineInfos
-                                select a).ToList();
-        // 3
-        //var medicineInfoList = _medicineContext.medicineInfos
-        //    .FromSqlRaw("select * from medicineinfos")
-        //    .ToList(); 
-
+        IEnumerable<MedicineInfo> medicineInfoList = _medicineInfoService.GetAll();
         return medicineInfoList;
     }
 
-    [HttpGet("/{id}")]
+    [HttpGet("/medicineInfo/{id}")]
     public ActionResult<MedicineInfo> GetById(Guid id)
     {
-        // === 1 ===
-        // var medicineInfo = _medicineContext.medicineInfos.Find(id);
-        // === 2 ===
-        var medicineInfo = (from a in _medicineContext.medicineInfos
-                            where a.Id == id
-                            select a).SingleOrDefault();
-        // === 3 ===
-        //var medicineInfo = _medicineContext.medicineInfos
-        //    .FromSqlRaw($"select * from medicineinfos where id = '{id}'").SingleOrDefault();
-        if (medicineInfo == null)
-        {
-            return NotFound();
-            // return BadRequest();
-        }
+        MedicineInfo medicineInfo = _medicineInfoService.GetOne(id);
         return medicineInfo;
     }
 

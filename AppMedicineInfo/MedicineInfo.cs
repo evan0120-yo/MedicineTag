@@ -6,10 +6,10 @@ namespace MedicineTag.AppMedicineInfo;
 public class MedicineInfo
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public Guid MedicineInfoId { get; set; }
 
     [Required]
-    public string Name { get; set; } = string.Empty;  // 藥物名稱
+    public string MedicineInfoName { get; set; } = string.Empty;  // 藥物名稱
 
     public DateTime UpdateTime { get; set; }
 

@@ -4,9 +4,9 @@ namespace MedicineTag.AppMedicineInfo;
 
 public class MedicineInfoVO
 {
-    public Guid Id { get; set; }
+    public Guid MedicineInfoId { get; set; }
 
-    public string? Name { get; set; }
+    public string? MedicineInfoName { get; set; }
 
     public DateTime UpdateTime { get; set; } = DateTime.Now;
 

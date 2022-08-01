@@ -2,9 +2,11 @@
 
 public class MedicineInfoDTO
 {
-    public Guid Id { get; set; }
+    public Guid MedicineInfoId { get; set; }
 
-    public string? Name { get; set; }
+    public string? MedicineInfoName { get; set; }
+
+    public string[]? MedicineClassName { get; set; }   // BP
 
 }
 

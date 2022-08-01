@@ -1,5 +1,6 @@
 using MedicineTag.AppMedicineClass;
 using MedicineTag.AppMedicineInfo;
+using MedicineTag.AppMedicineInfoClass;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicineTag.Models;
@@ -27,4 +28,6 @@ public partial class MedicineContext : DbContext
     public virtual DbSet<MedicineInfo> medicineInfos{get;set;}
 
     public virtual DbSet<MedicineClass> medicineClass { get; set; }
+
+    public virtual DbSet<MedicineInfoClass> medicineInfoClass { get; set; }
 }

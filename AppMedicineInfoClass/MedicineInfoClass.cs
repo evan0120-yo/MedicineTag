@@ -6,7 +6,7 @@ namespace MedicineTag.AppMedicineInfoClass;
 public class MedicineInfoClass
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public Guid MedicineInfoClassId { get; set; }
 
     public Guid MedicineInfoId { get; set; }
 

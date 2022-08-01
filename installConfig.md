@@ -4,7 +4,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 
 <!-- ================================ -->
 <!-- 更新Migrations -->
-dotnet ef migrations add init -- context MedicineContext
+dotnet ef migrations add init --context MedicineContext
 <!-- 更新DataBase -->
 dotnet ef database update --context MedicineContext
 
