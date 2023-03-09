@@ -19,6 +19,8 @@ builder.Services.AddAutoMapper(typeof(MedicineTagProfile).Assembly);
 // DI
 // builder.Services.AddTransient<MedicineContext>();   // 每次請求都拿到新的物件
 builder.Services.AddScoped<MedicineContext>();      // 每次請求都拿到同個物件
+builder.Services.AddScoped<MedicineInfoUseCase>();
+
 // 各個interface
 builder.Services.AddScoped(typeof(IMedicineInfoService), typeof(MedicineInfoService));
 builder.Services.AddScoped(typeof(IMedicineClassService), typeof(MedicineClassService));

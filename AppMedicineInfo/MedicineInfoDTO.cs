@@ -6,7 +6,7 @@ public class MedicineInfoDTO
 
     public string? MedicineInfoName { get; set; }
 
-    public string[]? MedicineClassName { get; set; }   // BP
+    public string[]? MedicineClassNameList { get; set; }   // BP
 
 }
 

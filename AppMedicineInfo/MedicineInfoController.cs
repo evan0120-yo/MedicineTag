@@ -13,17 +13,23 @@ public class MedicineInfoController : ControllerBase
 
     private readonly IMedicineInfoService _medicineInfoService;
 
+    private readonly MedicineInfoUseCase _medicineInfoUseCase;
+
     private readonly IMapper _IMapper;
 
     private readonly ILogger<IMedicineInfoService> _logger;
 
     public MedicineInfoController(MedicineContext medicineContext,
-        IMedicineInfoService medicineInfoService, IMapper IMapper, ILogger<IMedicineInfoService> logger)
+        IMedicineInfoService medicineInfoService, IMapper IMapper, ILogger<IMedicineInfoService> logger, 
+        MedicineInfoUseCase medicineInfoUseCase)
+
+
     {
         _medicineContext = medicineContext;
         _medicineInfoService = medicineInfoService;
         _IMapper = IMapper;
         _logger = logger;
+        _medicineInfoUseCase = medicineInfoUseCase;
     }
 
 
@@ -42,6 +48,7 @@ public class MedicineInfoController : ControllerBase
         {
             return BadRequest("藥品姓名不可為空");
         }
+        _medicineInfoUseCase.AddMedicineInfo(medicineInfoDTO);
         return "111";
     }
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MedicineTag.AppMedicineInfoClass;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MedicineTag.AppMedicineClass;
@@ -11,6 +12,8 @@ public class MedicineClass
     public string? MedicineClassName { get; set; }   // BP
 
     public string? MedicineClassTpye { get; set; }   // BP的類型
+
+    public List<MedicineInfoClass>? MedicineInfoClassList { get; set; }
 
 }
 

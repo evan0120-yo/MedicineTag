@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicineTag.Migrations
 {
     [DbContext(typeof(MedicineContext))]
-    [Migration("20220729075920_updateClassType")]
-    partial class updateClassType
+    [Migration("20220812175333_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("MedicineTag.AppMedicineClass.MedicineClass", b =>
@@ -73,7 +73,40 @@ namespace MedicineTag.Migrations
 
                     b.HasKey("MedicineInfoClassId");
 
+                    b.HasIndex("MedicineClassId");
+
+                    b.HasIndex("MedicineInfoId");
+
                     b.ToTable("medicineInfoClass");
+                });
+
+            modelBuilder.Entity("MedicineTag.AppMedicineInfoClass.MedicineInfoClass", b =>
+                {
+                    b.HasOne("MedicineTag.AppMedicineClass.MedicineClass", "MedicineClass")
+                        .WithMany("MedicineInfoClassList")
+                        .HasForeignKey("MedicineClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MedicineTag.AppMedicineInfo.MedicineInfo", "MedicineInfo")
+                        .WithMany("MedicineInfoClassList")
+                        .HasForeignKey("MedicineInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MedicineClass");
+
+                    b.Navigation("MedicineInfo");
+                });
+
+            modelBuilder.Entity("MedicineTag.AppMedicineClass.MedicineClass", b =>
+                {
+                    b.Navigation("MedicineInfoClassList");
+                });
+
+            modelBuilder.Entity("MedicineTag.AppMedicineInfo.MedicineInfo", b =>
+                {
+                    b.Navigation("MedicineInfoClassList");
                 });
 #pragma warning restore 612, 618
         }

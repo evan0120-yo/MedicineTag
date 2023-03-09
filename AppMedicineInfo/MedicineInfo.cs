@@ -1,7 +1,9 @@
+using MedicineTag.AppMedicineInfoClass;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MedicineTag.AppMedicineInfo;
+
 
 public class MedicineInfo
 {
@@ -14,5 +16,7 @@ public class MedicineInfo
     public DateTime UpdateTime { get; set; }
 
     public DateTime CreateTime { get; set; }
+
+    public List<MedicineInfoClass>? MedicineInfoClassList { get; set; }
 
 }
